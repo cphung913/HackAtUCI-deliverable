@@ -1,6 +1,37 @@
+import React, { useEffect, useState } from "react";
 import "./App.css";
+import QuoteList from "./components/QuoteList";
 
 function App() {
+	const [timeRange, setTimeRange] = useState("all");
+	const [quotes, setQuotes] = useState([]);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(null);
+
+	// Fetch quotes from api
+	useEffect(() => {
+		const controller = new AbortController();
+		const signal = controller.signal;
+
+		async function fetchQuotes() {
+			setLoading(true);
+			setError(null);
+			try {
+				const response = await fetch(`/api/quotes?time_range=${encodeURIComponent(timeRange)}`, { signal });
+				if (!response.ok) throw new Error(`HTTP ${response.status}`);
+				const data = await response.json();
+				setQuotes(data);
+			} catch (error) {
+				if (error.name !== "AbortError") setError(error.message || "Failed to fetch quotes");
+			} finally {
+				setLoading(false);
+			}
+		}
+
+		fetchQuotes();
+		return () => controller.abort();
+	}, [timeRange]);
+
 	return (
 		<div className="App">
 			{/* TODO: include an icon for the quote book */}

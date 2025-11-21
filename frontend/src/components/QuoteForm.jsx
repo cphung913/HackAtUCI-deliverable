@@ -18,20 +18,20 @@ export default function QuoteForm({ onSubmitted }) {
             formData.append("name", name);
             formData.append("message", message);
 
-            const res = await fetch("http://localhost:8000/quote", {
+            const response = await fetch("http://localhost:8000/quote", {
                 method: "POST",
                 body: formData,
             });
 
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
             setSuccess(true);
             setName("");
             setMessage("");
 
             if (typeof onSubmitted === "function") onSubmitted();
-        } catch (err) {
-            setError(err.message || "Failed to submit quote");
+        } catch (error) {
+            setError(error.message || "Failed to submit quote");
         } finally {
             setLoading(false);
             setTimeout(() => setSuccess(false), 2000);

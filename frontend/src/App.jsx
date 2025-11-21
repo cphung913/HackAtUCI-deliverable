@@ -17,7 +17,7 @@ function App() {
 			setLoading(true);
 			setError(null);
 			try {
-				const response = await fetch(`/api/quotes?time_range=${encodeURIComponent(timeRange)}`, { signal });
+				const response = await fetch(`http://localhost:8000/quotes?time_range=${encodeURIComponent(timeRange)}`, { signal });
 				if (!response.ok) throw new Error(`HTTP ${response.status}`);
 				const data = await response.json();
 				setQuotes(data);
@@ -48,11 +48,23 @@ function App() {
 			</form>
 
 			<h2>Previous Quotes</h2>
-			{/* TODO: Display the actual quotes from the database */}
+
+			<label htmlFor="time-select">Show:</label>
+			<select
+				id="time-select"
+				value={timeRange}
+				onChange={(e) => setTimeRange(e.target.value)}>
+				<option value="week">Last week</option>
+				<option value="month">Last month</option>
+				<option value="year">Last year</option>
+				<option value="all">All time</option>
+			</select>
+			
 			<div className="messages">
-				<p>Peter Anteater</p>
-				<p>Zot Zot Zot!</p>
-				<p>Every day</p>
+				{quotes.length == 0 && !loading && <p>No quotes found.</p>}
+				{loading && <p>Loading quotes...</p>}
+				{error && <p className="error">Error: {error}</p>}
+				<QuoteList quotes={quotes} />
 			</div>
 		</div>
 	);

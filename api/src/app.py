@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from typing import AsyncIterator
 
 from fastapi import FastAPI, Form, status
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from typing_extensions import TypedDict
 
@@ -32,6 +33,15 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
 app = FastAPI(lifespan=lifespan)
 
+# allow requests from the frontend dev server
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.post("/quote")
 def post_message(name: str = Form(), message: str = Form()) -> RedirectResponse:
@@ -49,8 +59,11 @@ def post_message(name: str = Form(), message: str = Form()) -> RedirectResponse:
 
 @app.get("/quotes")
 async def get_quotes(time_range: str = "all") -> list[Quote]:
+    print(f"Database quotes count: {len(database['quotes'])}")  # <-- add this
+    print(f"First quote: {database['quotes'][0] if database['quotes'] else 'None'}")  # <-- add this
+    
     now = datetime.now()
-    cutoff = now
+    cutoff = datetime.min
 
     if time_range == "week":
         cutoff = now - timedelta(weeks=1)

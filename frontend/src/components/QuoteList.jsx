@@ -1,13 +1,10 @@
-export default function QuoteList({ quotes }) {
-    return (
-        <div className="quote-list">
-            {quotes.map((quote, index) => (
-                <div key={index} className="quote-item">
-                    <p><strong>{quote.name}</strong> says:</p>
-                    <p>"{quote.message}"</p>
-                    <p><em>Submitted on: {new Date(quote.time).toLocaleString()}</em></p>
-                </div>
-            ))}
-        </div>
-    );
+import QuoteComponent from "./QuoteComponent";
+
+export default function QuoteList({ quotes, loading, error }) {
+    return (<div className="messages">
+				{quotes.length == 0 && !loading && <p>No quotes found.</p>}
+				{loading && <p>Loading quotes...</p>}
+				{error && <p className="error">Error: {error}</p>}
+				<QuoteComponent quotes={quotes}/>
+			</div>)
 }

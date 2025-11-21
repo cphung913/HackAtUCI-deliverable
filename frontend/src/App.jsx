@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
+import quoteIcon from "./assets/quotebook.png";
+import TimeRangeSelect from "./components/TimeRangeSelect";
 import QuoteList from "./components/QuoteList";
+import QuoteForm from "./components/QuoteForm";
 
 function App() {
 	const [timeRange, setTimeRange] = useState("all");
@@ -34,38 +37,15 @@ function App() {
 
 	return (
 		<div className="App">
-			{/* TODO: include an icon for the quote book */}
+			<img src={quoteIcon}/>
 			<h1>Hack at UCI Tech Deliverable</h1>
 
 			<h2>Submit a quote</h2>
-			{/* TODO: implement custom form submission logic to not refresh the page */}
-			<form action="/api/quote" method="post">
-				<label htmlFor="input-name">Name</label>
-				<input type="text" name="name" id="input-name" required />
-				<label htmlFor="input-message">Quote</label>
-				<input type="text" name="message" id="input-message" required />
-				<button type="submit">Submit</button>
-			</form>
+			<QuoteForm/>
 
 			<h2>Previous Quotes</h2>
-
-			<label htmlFor="time-select">Show:</label>
-			<select
-				id="time-select"
-				value={timeRange}
-				onChange={(e) => setTimeRange(e.target.value)}>
-				<option value="week">Last week</option>
-				<option value="month">Last month</option>
-				<option value="year">Last year</option>
-				<option value="all">All time</option>
-			</select>
-			
-			<div className="messages">
-				{quotes.length == 0 && !loading && <p>No quotes found.</p>}
-				{loading && <p>Loading quotes...</p>}
-				{error && <p className="error">Error: {error}</p>}
-				<QuoteList quotes={quotes} />
-			</div>
+			<TimeRangeSelect timeRange={timeRange} setTimeRange={setTimeRange} />
+			<QuoteList quotes={quotes} loading={loading} error={error}/>
 		</div>
 	);
 }

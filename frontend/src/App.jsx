@@ -10,6 +10,7 @@ function App() {
 	const [quotes, setQuotes] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
+	const [reload, setReload] = useState(0);
 
 	// Fetch quotes from api
 	useEffect(() => {
@@ -33,19 +34,18 @@ function App() {
 
 		fetchQuotes();
 		return () => controller.abort();
-	}, [timeRange]);
+	}, [timeRange, reload]);
 
 	return (
 		<div className="App">
 			<img src={quoteIcon}/>
 			<h1>Hack at UCI Tech Deliverable</h1>
 
-			<h2>Submit a quote</h2>
-			<QuoteForm/>
-
-			<h2>Previous Quotes</h2>
-			<TimeRangeSelect timeRange={timeRange} setTimeRange={setTimeRange} />
-			<QuoteList quotes={quotes} loading={loading} error={error}/>
+		<h2>Submit a quote</h2>
+		<QuoteForm onSubmitted={() => setReload((n) => n + 1)} />
+		<h2>Previous Quotes</h2>
+		<TimeRangeSelect timeRange={timeRange} setTimeRange={setTimeRange} />
+		<QuoteList quotes={quotes} loading={loading} error={error}/>
 		</div>
 	);
 }

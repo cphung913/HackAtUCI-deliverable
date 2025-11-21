@@ -75,4 +75,4 @@ async def get_quotes(time_range: str = "all") -> list[Quote]:
         return []  # Error catch
 
     filtered_quotes = [quote for quote in database["quotes"] if datetime.fromisoformat(quote["time"]) > cutoff]
-    return filtered_quotes
+    return filtered_quotes[::-1]

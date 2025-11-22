@@ -15,5 +15,3 @@ Users can filter which quotes are displayed by date.
 https://github.com/user-attachments/assets/56cae633-a4d5-4e8c-a123-d679cc30043f
 
 Users are able to post a submission with name and quote.
-
-## Demo

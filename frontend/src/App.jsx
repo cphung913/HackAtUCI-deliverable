@@ -38,14 +38,17 @@ function App() {
 
 	return (
 		<div className="App">
-			<img src={quoteIcon}/>
-			<h1>Hack at UCI Tech Deliverable</h1>
+			<div className="header">
+				<img src={quoteIcon}/>
+				<h1>Hack at UCI Tech Deliverable</h1>
+			</div>
+		
+			<h2>Submit a quote</h2>
+			<QuoteForm onSubmitted={() => setReload((n) => n + 1)} />
 
-		<h2>Submit a quote</h2>
-		<QuoteForm onSubmitted={() => setReload((n) => n + 1)} />
-		<h2>Previous Quotes</h2>
-		<TimeRangeSelect timeRange={timeRange} setTimeRange={setTimeRange} />
-		<QuoteList quotes={quotes} loading={loading} error={error}/>
+			<h2>Previous Quotes</h2>
+			<TimeRangeSelect timeRange={timeRange} setTimeRange={setTimeRange} />
+			<QuoteList quotes={quotes} loading={loading} error={error}/>
 		</div>
 	);
 }

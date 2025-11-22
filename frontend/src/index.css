@@ -1,3 +1,222 @@
 :root {
 	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	--primary-color: #8b5e3c;
+	--secondary-color: #cda45a;
+	--background-color: #f7dfc8;
+	--text-color: #333;
+	--border-color: #ddd;
+	--error-color: #dc3545;
+	--success-color: #28a745;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: var(--background-color);
+	color: var(--text-color);
+	line-height: 1.6;
+}
+
+#root {
+	min-height: 100vh;
+	padding: 20px;
+}
+
+.App {
+	max-width: 800px;
+	margin: 0 auto;
+	background: white;
+	border-radius: 8px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	padding: 40px;
+}
+
+.header {
+	display: flex;
+	margin-bottom: 30px;
+	justify-content: center;
+	align-items: center;
+}
+
+img {
+	height: 60px;
+	margin-right: 5px;
+	transform: translateX(-25%) translateY(-15%)
+}
+
+h1 {
+	color: var(--primary-color);
+	margin-bottom: 30px;
+	text-align: center;
+	font-size: 2.5em;
+}
+
+h2 {
+	color: var(--primary-color);
+	margin-top: 30px;
+	margin-bottom: 15px;
+	font-size: 1.8em;
+	border-bottom: 2px solid var(--secondary-color);
+	padding-bottom: 10px;
+}
+
+/* Form */
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	margin-bottom: 20px;
+}
+
+label {
+	font-weight: 600;
+	color: var(--primary-color);
+	margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+	padding: 10px 12px;
+	border: 1px solid var(--border-color);
+	border-radius: 4px;
+	font-size: 1em;
+	transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+select:focus {
+	outline: none;
+	border-color: var(--secondary-color);
+	box-shadow: 0 0 0 3px rgba(205, 164, 90, 0.1);
+}
+
+button {
+	padding: 10px 20px;
+	background-color: var(--primary-color);
+	color: white;
+	border: none;
+	border-radius: 4px;
+	font-size: 1em;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+button:hover:not(:disabled) {
+	background-color: var(--secondary-color);
+}
+
+button:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+/* Messages and Status */
+p {
+	margin: 10px 0;
+	padding: 10px;
+	border-radius: 4px;
+}
+
+p[style*="color: green"] {
+	background-color: rgba(40, 167, 69, 0.1);
+	color: var(--success-color);
+	border-left: 4px solid var(--success-color);
+}
+
+p[style*="color: red"],
+.error {
+	background-color: rgba(220, 53, 69, 0.1);
+	color: var(--error-color);
+	border-left: 4px solid var(--error-color);
+}
+
+/* Quote List */
+.messages {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	margin-top: 20px;
+}
+
+/* Keyframe animations */
+@keyframes slideUpFadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(30px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.quote-item {
+	background-color: #fafafa;
+	border-left: 4px solid var(--secondary-color);
+	padding: 10px 15px;
+	border-radius: 4px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+	margin-bottom: 8px;
+	opacity: 0;
+	transform: translateY(30px);
+	transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.quote-item.visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.quote-item p {
+	margin: 8;
+	padding: 0;
+	line-height: 1.4;
+}
+
+.quote-item p:last-child {
+	margin-top: 6px;
+}
+
+.quote-item strong {
+	color: var(--primary-color);
+	font-weight: 600;
+}
+
+.quote-item em {
+	color: #999;
+	font-size: 0.85em;
+	display: block;
+	margin-top: 6px;
+}
+
+/* Dropdown */
+select {
+	margin-left: 3px;
+	max-width: 300px;
+	background-color: white;
+	cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+	.App {
+		padding: 20px;
+	}
+
+	h1 {
+		font-size: 1.8em;
+	}
+
+	h2 {
+		font-size: 1.4em;
+	}
 }
